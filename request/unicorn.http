@@ -1,0 +1,16 @@
+DELETE https://crudcrud.com/api/d53814d6405b4b148603c1bf42e66af1/unicorn/675d82876297b503e8bd852a
+Accept: application/json
+
+###
+GET https://crudcrud.com/api/d53814d6405b4b148603c1bf42e66af1/unicorn/675d82876297b503e8bd852a
+Accept: application/json
+
+###
+POST https://crudcrud.com/api/d53814d6405b4b148603c1bf42e66af1/unicorn
+Content-Type: application/json
+
+{
+  "name": "AppleJack",
+  "tailColor": "orange"
+}
+
