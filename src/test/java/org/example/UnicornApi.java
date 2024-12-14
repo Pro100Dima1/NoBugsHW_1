@@ -38,6 +38,11 @@ public class UnicornApi {
                 "  \"name\": \"AppleJack\",\n" +
                 "  \"tailColor\": \"blue\"\n" +
                 "}");
+        given()
+                .get("/unicorn/" + id)
+                .then()
+                .assertThat()
+                .statusCode(200);
 
     }
 
