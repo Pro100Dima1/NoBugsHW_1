@@ -1,8 +1,10 @@
 package org.example.api;
 
 import io.restassured.http.ContentType;
+import org.apache.http.HttpStatus;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasKey;
 
 public class UnicornRequests {
@@ -25,6 +27,17 @@ public class UnicornRequests {
         given()
                 .delete("/unicorn/" + id)
                 .then()
+                .assertThat()
+                .statusCode(200);
+    }
+
+    public static void changeTailColor(String id, String body){
+        given()
+                .body(body)
+                .contentType(ContentType.JSON)
+        .when()
+                .put("/unicorn/" + id)
+        .then()
                 .assertThat()
                 .statusCode(200);
     }

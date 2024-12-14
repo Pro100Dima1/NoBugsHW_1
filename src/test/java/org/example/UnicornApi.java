@@ -29,6 +29,20 @@ public class UnicornApi {
     }
 
     @Test
+    public void userShouldBeAbleChangeTailColor(){
+        String id = UnicornRequests.createUnicorn("{\n" +
+                "  \"name\": \"AppleJack\",\n" +
+                "  \"tailColor\": \"orange\"\n" +
+                "}");
+        UnicornRequests.changeTailColor(id, "{\n" +
+                "  \"name\": \"AppleJack\",\n" +
+                "  \"tailColor\": \"blue\"\n" +
+                "}");
+
+    }
+
+
+    @Test
     public void userShouldBeAbleDeleteExistingUnicorn(){
         //Принципы разработки API тестов:
         //1) Атомарность
