@@ -6,6 +6,7 @@ import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import org.apache.http.HttpStatus;
 import org.example.api.UnicornRequests;
+import org.example.api.models.Unicorn;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -22,10 +23,11 @@ public class UnicornApi {
 
     @Test
     public void userShouldBeAbleCreateUnicorn(){
-         UnicornRequests.createUnicorn("{\n" +
-                "  \"name\": \"AppleJack\",\n" +
-                "  \"tailColor\": \"orange\"\n" +
-                "}");
+        // given - when - then  BDD
+        // Серилизация из JSON в объект и наоборот. Можно с помощью библиотеки Jackson
+
+        Unicorn unicorn = new Unicorn("Pinkypie", "red");
+        UnicornRequests.createUnicorn(unicorn.toJSON());
     }
 
     @Test
@@ -45,7 +47,7 @@ public class UnicornApi {
                 .statusCode(200);
 
     }
-
+// Jackson core + gson
 
     @Test
     public void userShouldBeAbleDeleteExistingUnicorn(){
@@ -54,10 +56,8 @@ public class UnicornApi {
         //2) Тест сам себе готовит данные
 
        // Шаг 1 Создание единорога
-        String id = UnicornRequests.createUnicorn("{\n" +
-                "  \"name\": \"AppleJack\",\n" +
-                "  \"tailColor\": \"orange\"\n" +
-                "}");
+        Unicorn unicorn = new Unicorn("Pinkypie", "red");
+        String id = UnicornRequests.createUnicorn(unicorn.toJSON());
 
         //Шаг 2 Удаление единорога
         UnicornRequests.deleteUnicorn(id);

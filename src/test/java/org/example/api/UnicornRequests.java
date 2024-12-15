@@ -1,13 +1,15 @@
 package org.example.api;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.http.ContentType;
-import org.apache.http.HttpStatus;
+
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasKey;
 
 public class UnicornRequests {
+    private ObjectMapper objectMapper = new ObjectMapper();
+
     public static String createUnicorn(String body){
         // given - when - then  BDD
         return given()
