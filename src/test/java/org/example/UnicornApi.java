@@ -1,9 +1,12 @@
 package org.example;
 
 import io.restassured.RestAssured;
+import io.restassured.config.ObjectMapperConfig;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
+import io.restassured.mapper.ObjectMapperType;
+import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
 import org.example.api.UnicornRequests;
 import org.example.api.models.Unicorn;
@@ -12,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.hasKey;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class UnicornApi {
     @BeforeAll
@@ -23,13 +27,16 @@ public class UnicornApi {
 
     @Test
     public void userShouldBeAbleCreateUnicorn(){
+
         // given - when - then  BDD
         // Серилизация из JSON в объект и наоборот. Можно с помощью библиотеки Jackson или написать свой метод
 
         Unicorn unicorn = Unicorn.builder()
                 .name("Old").tailColor("Pivo")
                 .build();
-        UnicornRequests.createUnicorn(unicorn);
+        Unicorn createdUnicorn = UnicornRequests.createUnicorn(unicorn);
+        assertNotNull(createdUnicorn.getId());
+        System.out.println("Created Unicorn ID: " + createdUnicorn.getId());
     }
 
    /* @Test
@@ -75,5 +82,6 @@ public class UnicornApi {
                 .assertThat()
                 .statusCode(HttpStatus.SC_NOT_FOUND);
     }
+
 
 }

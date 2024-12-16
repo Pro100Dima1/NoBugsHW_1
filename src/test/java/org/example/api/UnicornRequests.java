@@ -5,8 +5,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.http.ContentType;
 import io.restassured.mapper.ObjectMapperType;
 import org.example.api.models.Unicorn;
-
-
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.hasKey;
 
@@ -18,7 +16,7 @@ public class UnicornRequests {
         // тем самым выхывая методы класса без создания объекта, просто через точку
         String unicornJson = null;
         try {
-            unicornJson = new ObjectMapper().writeValueAsString(unicorn);  // Объект Маппер Джексона.
+            unicornJson = new ObjectMapper().writeValueAsString(unicorn); // Объект Маппер Джексона.
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -54,4 +52,6 @@ public class UnicornRequests {
                 .assertThat()
                 .statusCode(200);
     }
+
+
 }

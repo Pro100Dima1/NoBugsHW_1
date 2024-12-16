@@ -1,5 +1,6 @@
 package org.example.api.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.gson.annotations.SerializedName;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +12,8 @@ import lombok.Data;
 public class Unicorn {
     private String name;
     private String tailColor;
-    @SerializedName("_id")  // Парсит указанное поле из Json  в переменную ниже
+    //@SerializedName("_id")
+    @JsonProperty("_id")  // Парсит указанное поле из Json  в переменную ниже
     private String id;
 
 
