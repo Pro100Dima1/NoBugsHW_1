@@ -1,22 +1,21 @@
 package org.example.api.models;
 
+import com.google.gson.annotations.SerializedName;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+
+@Data
+@AllArgsConstructor
+@Builder
 public class Unicorn {
     private String name;
     private String tailColor;
+    @SerializedName("_id")  // Парсит указанное поле из Json  в переменную ниже
+    private String id;
 
-    public String getName(){
-        return this.name;
-    }
-    public String getTailColor(){
-        return this.tailColor;
-    }
 
-    public Unicorn(String name, String tailColor){
-        this.name = name;
-        this.tailColor = tailColor;
-    }
-
-    @Override
+   /* @Override
     public String toString() {
         return "{\n" +
                 "  \"name\":\"" + name + "\",\n" +
@@ -24,10 +23,10 @@ public class Unicorn {
                 "}";
     }
 
-    public String toJSON(){
+   /* public String toJSON(){
         return "{\n" +
                 "  \"name\":\"" + name + "\",\n" +
                 "  \"tailColor\":\"" + tailColor + "\"\n" +
                 "}";
-    }
+    }*/  //Тутова мы сериализуем объект в JSON
 }

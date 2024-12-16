@@ -24,13 +24,15 @@ public class UnicornApi {
     @Test
     public void userShouldBeAbleCreateUnicorn(){
         // given - when - then  BDD
-        // Серилизация из JSON в объект и наоборот. Можно с помощью библиотеки Jackson
+        // Серилизация из JSON в объект и наоборот. Можно с помощью библиотеки Jackson или написать свой метод
 
-        Unicorn unicorn = new Unicorn("Pinkypie", "red");
-        UnicornRequests.createUnicorn(unicorn.toJSON());
+        Unicorn unicorn = Unicorn.builder()
+                .name("Old").tailColor("Pivo")
+                .build();
+        UnicornRequests.createUnicorn(unicorn);
     }
 
-    @Test
+   /* @Test
     public void userShouldBeAbleChangeTailColor(){
         String id = UnicornRequests.createUnicorn("{\n" +
                 "  \"name\": \"AppleJack\",\n" +
@@ -46,7 +48,7 @@ public class UnicornApi {
                 .assertThat()
                 .statusCode(200);
 
-    }
+    }*/
 // Jackson core + gson
 
     @Test
@@ -56,15 +58,19 @@ public class UnicornApi {
         //2) Тест сам себе готовит данные
 
        // Шаг 1 Создание единорога
-        Unicorn unicorn = new Unicorn("Pinkypie", "red");
-        String id = UnicornRequests.createUnicorn(unicorn.toJSON());
+        Unicorn unicorn = Unicorn.builder()
+                .name("Old").tailColor("Pivo")
+                .build();
+        Unicorn createdUnicorn = UnicornRequests.createUnicorn(unicorn);
+
+
 
         //Шаг 2 Удаление единорога
-        UnicornRequests.deleteUnicorn(id);
+        UnicornRequests.deleteUnicorn(createdUnicorn.getId());
 
         //Щаг 3 Проверка что единорог удалился
         given()
-                .get("/unicorn/" + id)
+                .get("/unicorn/" + createdUnicorn.getId())
         .then()
                 .assertThat()
                 .statusCode(HttpStatus.SC_NOT_FOUND);

@@ -1,19 +1,29 @@
 package org.example.api;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.restassured.http.ContentType;
+import io.restassured.mapper.ObjectMapperType;
+import org.example.api.models.Unicorn;
 
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.hasKey;
 
 public class UnicornRequests {
-    private ObjectMapper objectMapper = new ObjectMapper();
 
-    public static String createUnicorn(String body){
+    public static Unicorn createUnicorn(Unicorn unicorn){
         // given - when - then  BDD
+        // Если объект создан не в классе, а в методе и класс не хранит состояния объекта, то можно делать методы static
+        // тем самым выхывая методы класса без создания объекта, просто через точку
+        String unicornJson = null;
+        try {
+            unicornJson = new ObjectMapper().writeValueAsString(unicorn);  // Объект Маппер Джексона.
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
         return given()
-                .body(body)
+                .body(unicornJson)
                 .contentType(ContentType.JSON)
         .when()
                 .post("/unicorn")
@@ -22,7 +32,8 @@ public class UnicornRequests {
                 .statusCode(201)
                 .body("$", hasKey("_id"))
         .extract()
-                .path("_id");  // extract - вытаскивает значение из указанного поля
+                .as(Unicorn.class, ObjectMapperType.GSON);
+                  // extract - вытаскивает значение из указанного поля
     }
 
     public static void deleteUnicorn(String id){
