@@ -15,6 +15,8 @@ dependencies {
     testImplementation("io.rest-assured:rest-assured:4.5.1")
     testImplementation("com.google.code.gson:gson:2.8.9")
     testImplementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
+    implementation("com.codeborne:selenide:7.5.1")
+
 
 }
 
