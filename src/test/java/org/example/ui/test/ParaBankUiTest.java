@@ -1,111 +1,69 @@
 package org.example.ui.test;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.Selectors;
-import com.codeborne.selenide.Selenide;
-import com.codeborne.selenide.SelenideElement;
+import com.codeborne.selenide.*;
+import org.example.ui.datas.BankAccount;
 import org.example.ui.pages.RegistrationPage;
+import org.example.ui.utils.RandomData;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import static com.codeborne.selenide.Selenide.element;
 
 public class ParaBankUiTest {
+    @BeforeAll
+    public static void setUpUiTest(){
+        Configuration.baseUrl = "https://parabank.parasoft.com";
+        //Configuration.browser = "firefox";
+        //Configuration.timeout = 10;
+    }
     @Test
     @DisplayName("Проверка, что нельзя зарегестрироваться только с именем и фамилией")
     public void userCanNotCreateAccountWithNameAndSurnameOnly(){
         RegistrationPage.selenideOpen();
 
-        SelenideElement firstName = element(Selectors.byId("customer.firstName"));
-        firstName.sendKeys("Dmitry");
+        BankAccount bankAccount = BankAccount.builder()
+                .firstName(RandomData.randomString()).lastName(RandomData.randomString()).address("Dom 10").city("Moscow")
+                .state("Nope").zipCode("001-120-000").phone("88005553535").ssn("9344541")
+                .userName("Pro100Dima").password("Qwerty").confirm("Qwerty")
+                .build();
 
-        SelenideElement lastName = element(Selectors.byId("customer.lastName"));
-        lastName.sendKeys("Petrov");
+        RegistrationPage registrationPage = new RegistrationPage();
+        registrationPage.registryAccount(bankAccount);
 
-        RegistrationPage.selenideClickRegistrationButton();
-
-        SelenideElement adressError = element(Selectors.byId("customer.address.street.errors"));
-        adressError.shouldHave(Condition.exactText("Address is required."));
+        registrationPage.getAdressErrorStreet().shouldHave(Condition.exactText("Address is required."));
     }
     @Test
     @DisplayName("Проверка, что нельзя зарегестрироваться без имени и фамилии")
     public void userCanNotCreateAccountWithoutNameAndSurname(){
         RegistrationPage.selenideOpen();
 
-        SelenideElement address = element(Selectors.byId("customer.address.street"));
-        address.sendKeys("Dom 8");
+        BankAccount bankAccount = BankAccount.builder()
+                .firstName(RandomData.randomString()).lastName(RandomData.randomString()).address("Dom 10").city("Moscow")
+                .state("Nope").zipCode("001-120-000").phone("88005553535").ssn("9344541")
+                .userName("Pro100Dima").password("Qwerty").confirm("Qwerty")
+                .build();
 
-        SelenideElement city = element(Selectors.byId("customer.address.city"));
-        city.sendKeys("Moscow");
+        RegistrationPage registrationPage = new RegistrationPage();
+        registrationPage.registryAccount(bankAccount);
 
-        SelenideElement state = element(Selectors.byId("customer.address.state"));
-        state.sendKeys("Yeaa");
-
-        SelenideElement zipCode = element(Selectors.byId("customer.address.zipCode"));
-        zipCode.sendKeys("234");
-
-        SelenideElement phone = element(Selectors.byId("customer.phoneNumber"));
-        phone.sendKeys("88005553535");
-
-        SelenideElement ssn = element(Selectors.byId("customer.ssn"));
-        ssn.sendKeys("Dmitry");
-
-        SelenideElement userName = element(Selectors.byId("customer.username"));
-        userName.sendKeys("Pro100Dima");
-
-        SelenideElement password = element(Selectors.byId("customer.password"));
-        password.sendKeys("Dmitry");
-
-        SelenideElement confirm = element(Selectors.byId("repeatedPassword"));
-        confirm.sendKeys("Dmitry");
-
-        RegistrationPage.selenideClickRegistrationButton();
-
-        SelenideElement adressError = element(Selectors.byId("customer.firstName.errors"));
-        adressError.shouldHave(Condition.exactText("First name is required."));
+        registrationPage.getAdressErrorName().shouldHave(Condition.exactText("First name is required."));
     }
     @Test
     @DisplayName("Проверка успешной регистрации")
     public void userCreateAccountSucsess(){
         RegistrationPage.selenideOpen();
 
-        SelenideElement firstName = element(Selectors.byId("customer.firstName"));
-        firstName.sendKeys("Dmitry");
+        BankAccount bankAccount = BankAccount.builder()
+                .firstName(RandomData.randomString()).lastName(RandomData.randomString()).address("Dom 10").city("Moscow")
+                .state("Nope").zipCode("001-120-000").phone("88005553535").ssn("9344541")
+                .userName("Pro100Dima").password("Qwerty").confirm("Qwerty")
+                .build();
 
-        SelenideElement lastName = element(Selectors.byId("customer.lastName"));
-        lastName.sendKeys("Petrov");
+        RegistrationPage registrationPage = new RegistrationPage();
+        registrationPage.registryAccount(bankAccount);
 
-        SelenideElement address = element(Selectors.byId("customer.address.street"));
-        address.sendKeys("Dom 8");
-
-        SelenideElement city = element(Selectors.byId("customer.address.city"));
-        city.sendKeys("Moscow");
-
-        SelenideElement state = element(Selectors.byId("customer.address.state"));
-        state.sendKeys("Moscow");
-
-        SelenideElement zipCode = element(Selectors.byId("customer.address.zipCode"));
-        zipCode.sendKeys("934");
-
-        SelenideElement phone = element(Selectors.byId("customer.phoneNumber"));
-        phone.sendKeys("88005553535");
-
-        SelenideElement ssn = element(Selectors.byId("customer.ssn"));
-        ssn.sendKeys("000-00-0000");
-
-        SelenideElement userName = element(Selectors.byId("customer.username"));
-        userName.sendKeys("Pro100Dimaaa");
-
-        SelenideElement password = element(Selectors.byId("customer.password"));
-        password.sendKeys("Pro100Dima!");
-
-        SelenideElement confirm = element(Selectors.byId("repeatedPassword"));
-        confirm.sendKeys("Pro100Dima!");
-
-        RegistrationPage.selenideClickRegistrationButton();
-
-        SelenideElement sucsess = element(Selectors.byId("headerPanel"));
-        sucsess.isDisplayed();
+        registrationPage.getSucsess().isDisplayed();
     }
 
 }

@@ -1,14 +1,9 @@
-package org.example;
+package org.example.api;
 
 import io.restassured.RestAssured;
-import io.restassured.config.ObjectMapperConfig;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
-import io.restassured.http.ContentType;
-import io.restassured.mapper.ObjectMapperType;
-import io.restassured.response.Response;
 import org.apache.http.HttpStatus;
-import org.example.api.UnicornRequests;
 import org.example.api.models.Unicorn;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
