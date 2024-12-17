@@ -24,6 +24,9 @@ public class ParaBankUiTest {
 
         BankAccount bankAccount = BankAccount.builder()
                 .firstName(RandomData.randomString()).lastName(RandomData.randomString())
+                .address("").city("")
+                .state("").zipCode("").phone("").ssn("")
+                .userName("").password("").confirm("")
                 .build();
 
         RegistrationPage registrationPage = new RegistrationPage();
@@ -37,6 +40,7 @@ public class ParaBankUiTest {
         RegistrationPage.selenideOpen();
 
         BankAccount bankAccount = BankAccount.builder()
+                .firstName("").lastName("")
                 .address("Dom 10").city("Moscow")
                 .state("Nope").zipCode("001-120-000").phone("88005553535").ssn("9344541")
                 .userName("Pro100Dima").password("Qwerty").confirm("Qwerty")
