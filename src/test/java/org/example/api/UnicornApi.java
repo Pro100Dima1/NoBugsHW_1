@@ -9,19 +9,18 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.hasKey;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class UnicornApi {
     @BeforeAll
-    public static void setUpTests(){
+    public static void setUpTests() {
         RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter()); // Фильтра рест ашура для того что б в консоли видеть что кладется в запрос и ответ
         RestAssured.baseURI = "https://crudcrud.com/api/d53814d6405b4b148603c1bf42e66af1"; // Базовый урл. Он автоматически подставляется в методах post, get итд
         // Принцип программирования DRY Do Not Repeat Yourself: Если пишешь один и тот же код дважды, он должен быть вынесен в метод
     }
 
     @Test
-    public void userShouldBeAbleCreateUnicorn(){
+    public void userShouldBeAbleCreateUnicorn() {
 
         // given - when - then  BDD
         // Серилизация из JSON в объект и наоборот. Можно с помощью библиотеки Jackson или написать свой метод
@@ -54,17 +53,16 @@ public class UnicornApi {
 // Jackson core + gson
 
     @Test
-    public void userShouldBeAbleDeleteExistingUnicorn(){
+    public void userShouldBeAbleDeleteExistingUnicorn() {
         //Принципы разработки API тестов:
         //1) Атомарность
         //2) Тест сам себе готовит данные
 
-       // Шаг 1 Создание единорога
+        // Шаг 1 Создание единорога
         Unicorn unicorn = Unicorn.builder()
                 .name("Old").tailColor("Pivo")
                 .build();
         Unicorn createdUnicorn = UnicornRequests.createUnicorn(unicorn);
-
 
 
         //Шаг 2 Удаление единорога
@@ -73,7 +71,7 @@ public class UnicornApi {
         //Щаг 3 Проверка что единорог удалился
         given()
                 .get("/unicorn/" + createdUnicorn.getId())
-        .then()
+                .then()
                 .assertThat()
                 .statusCode(HttpStatus.SC_NOT_FOUND);
     }
