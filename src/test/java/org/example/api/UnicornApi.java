@@ -78,5 +78,4 @@ public class UnicornApi {
                 .statusCode(HttpStatus.SC_NOT_FOUND);
     }
 
-
 }
