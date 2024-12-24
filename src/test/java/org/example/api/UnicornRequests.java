@@ -14,7 +14,7 @@ public class UnicornRequests {
     public static Unicorn createUnicorn(Unicorn unicorn) {
         // given - when - then  BDD
         // Если объект создан не в классе, а в методе и класс не хранит состояния объекта, то можно делать методы static
-        // тем самым выхывая методы класса без создания объекта, просто через точку
+        // тем самым вызывая методы класса без создания объекта, просто через точку
         String unicornJson = null;
         try {
             unicornJson = new ObjectMapper().writeValueAsString(unicorn); // Объект Маппер Джексона.
