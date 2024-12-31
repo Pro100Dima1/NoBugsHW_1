@@ -53,6 +53,4 @@ public class UnicornRequests {
                 .assertThat()
                 .statusCode(200);
     }
-
-
 }
