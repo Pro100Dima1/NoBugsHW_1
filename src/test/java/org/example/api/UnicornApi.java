@@ -75,5 +75,4 @@ public class UnicornApi {
                 .assertThat()
                 .statusCode(HttpStatus.SC_NOT_FOUND);
     }
-
 }
